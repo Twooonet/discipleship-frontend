@@ -21,7 +21,7 @@ export default function Resources() {
 
   function searchGotQuestions(searchTerm) {
     if (!searchTerm.trim()) return;
-    const url = `https://www.gotquestions.org/search.php?s=${encodeURIComponent(searchTerm.trim())}`;
+    const url = `https://www.google.com/search?q=site:gotquestions.org+${encodeURIComponent(searchTerm.trim())}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
@@ -102,7 +102,7 @@ export default function Resources() {
       {/* About */}
       <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-800/30 rounded-2xl p-4 text-center">
         <p className="text-xs text-purple-600 dark:text-purple-400">
-          Results open on <span className="font-semibold">GotQuestions.org</span> — a trusted biblical Q&A resource with answers to over 700,000 questions.
+          Results are searched through Google on <span className="font-semibold">GotQuestions.org</span> — a trusted biblical Q&A resource with answers to over 700,000 questions.
         </p>
       </div>
     </div>
