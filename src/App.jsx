@@ -8,6 +8,7 @@ import Threads from './pages/Threads';
 import ThreadDetail from './pages/ThreadDetail';
 import Offerings from './pages/Offerings';
 import Feedback from './pages/Feedback';
+import Photos, { AlbumDetail } from './pages/Photos';
 import AdminLogin from './components/AdminLogin';
 
 export default function App() {
@@ -22,6 +23,8 @@ export default function App() {
           <Route path="/threads/:id" element={<ThreadDetail />} />
           <Route path="/offerings" element={<Offerings />} />
           <Route path="/feedback" element={<Feedback />} />
+          <Route path="/photos" element={<Photos />} />
+          <Route path="/photos/:albumId" element={<AlbumDetail />} />
           <Route path="/admin-login" element={<AdminLogin />} />
         </Routes>
       </Layout>

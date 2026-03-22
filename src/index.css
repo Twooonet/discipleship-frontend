@@ -13,6 +13,14 @@ body {
   color: #1e1b4b;
 }
 
+.dark body, html.dark {
+  background-color: #0f0a1e;
+}
+
+.dark {
+  background-color: #0f0a1e;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }
