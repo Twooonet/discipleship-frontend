@@ -38,8 +38,12 @@ export default function AdminLogin() {
     try {
       await login(password);
       navigate('/');
-    } catch {
-      setError('Incorrect password. Please try again.');
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError('Incorrect password. Please try again.');
+      } else {
+        setError('Could not connect to server. Please check your internet connection.');
+      }
     } finally {
       setLoading(false);
     }
