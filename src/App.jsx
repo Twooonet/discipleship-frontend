@@ -9,6 +9,7 @@ import ThreadDetail from './pages/ThreadDetail';
 import Offerings from './pages/Offerings';
 import Feedback from './pages/Feedback';
 import Photos, { AlbumDetail } from './pages/Photos';
+import Resources from './pages/Resources';
 import AdminLogin from './components/AdminLogin';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/photos" element={<Photos />} />
           <Route path="/photos/:albumId" element={<AlbumDetail />} />
+          <Route path="/resources" element={<Resources />} />
           <Route path="/admin-login" element={<AdminLogin />} />
         </Routes>
       </Layout>
