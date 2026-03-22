@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AdminProvider } from './context/AdminContext';
+import { DarkModeProvider } from './context/DarkModeContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Calendar from './pages/Calendar';
@@ -11,6 +12,7 @@ import AdminLogin from './components/AdminLogin';
 
 export default function App() {
   return (
+    <DarkModeProvider>
     <AdminProvider>
       <Layout>
         <Routes>
@@ -24,5 +26,6 @@ export default function App() {
         </Routes>
       </Layout>
     </AdminProvider>
+    </DarkModeProvider>
   );
 }

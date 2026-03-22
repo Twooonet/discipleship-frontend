@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAdmin } from '../context/AdminContext';
+import { useDarkMode } from '../context/DarkModeContext';
 
 const navItems = [
   { to: '/', label: 'Home', icon: HomeIcon },
@@ -11,17 +12,18 @@ const navItems = [
 
 export default function Layout({ children }) {
   const { isAdmin, logout } = useAdmin();
+  const { dark, toggle } = useDarkMode();
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-purple-50 dark:bg-gray-950">
       {/* Sidebar — desktop */}
-      <aside className="hidden lg:flex flex-col w-60 bg-primary-800 text-white fixed inset-y-0 left-0 z-30">
-        <div className="px-6 py-6 border-b border-primary-700">
+      <aside className="hidden lg:flex flex-col w-60 bg-purple-900 text-white fixed inset-y-0 left-0 z-30">
+        <div className="px-6 py-6 border-b border-purple-800">
           <div className="flex items-center gap-3">
             <span className="text-2xl">✝</span>
             <div>
               <p className="font-bold text-lg leading-tight">Discipleship</p>
-              <p className="text-primary-300 text-xs">Group App</p>
+              <p className="text-purple-300 text-xs">Group App</p>
             </div>
           </div>
         </div>
@@ -35,8 +37,8 @@ export default function Layout({ children }) {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive
-                    ? 'bg-primary-600 text-white'
-                    : 'text-primary-200 hover:bg-primary-700 hover:text-white'
+                    ? 'bg-purple-600 text-white'
+                    : 'text-purple-200 hover:bg-purple-800 hover:text-white'
                 }`
               }
             >
@@ -46,13 +48,22 @@ export default function Layout({ children }) {
           ))}
         </nav>
 
-        <div className="px-4 py-4 border-t border-primary-700">
+        <div className="px-4 py-4 border-t border-purple-800 space-y-2">
+          {/* Dark mode toggle */}
+          <button
+            onClick={toggle}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-purple-200 hover:text-white hover:bg-purple-800 rounded-lg transition-colors"
+          >
+            {dark ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
+            {dark ? 'Light Mode' : 'Dark Mode'}
+          </button>
+
           {isAdmin ? (
-            <div className="space-y-2">
-              <p className="text-xs text-primary-300 px-3">Logged in as Admin</p>
+            <div className="space-y-1">
+              <p className="text-xs text-purple-400 px-3">Logged in as Admin</p>
               <button
                 onClick={logout}
-                className="w-full text-left px-3 py-2 text-sm text-primary-200 hover:text-white hover:bg-primary-700 rounded-lg transition-colors"
+                className="w-full text-left px-3 py-2 text-sm text-purple-200 hover:text-white hover:bg-purple-800 rounded-lg transition-colors"
               >
                 Logout
               </button>
@@ -60,7 +71,7 @@ export default function Layout({ children }) {
           ) : (
             <NavLink
               to="/admin-login"
-              className="flex items-center gap-2 px-3 py-2 text-sm text-primary-300 hover:text-white hover:bg-primary-700 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-3 py-2 text-sm text-purple-300 hover:text-white hover:bg-purple-800 rounded-lg transition-colors"
             >
               <LockIcon className="w-4 h-4" />
               Admin Login
@@ -71,11 +82,21 @@ export default function Layout({ children }) {
 
       {/* Main content */}
       <div className="flex-1 lg:ml-60 flex flex-col min-h-screen">
+        {/* Mobile top bar */}
+        <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-purple-900 text-white">
+          <div className="flex items-center gap-2">
+            <span>✝</span>
+            <span className="font-bold">Discipleship Group</span>
+          </div>
+          <button onClick={toggle} className="p-1.5 rounded-lg hover:bg-purple-800 transition-colors">
+            {dark ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
+          </button>
+        </div>
         <main className="flex-1 pb-20 lg:pb-0">{children}</main>
       </div>
 
       {/* Bottom nav — mobile */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 z-30 flex">
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 z-30 flex">
         {navItems.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -83,7 +104,9 @@ export default function Layout({ children }) {
             end={to === '/'}
             className={({ isActive }) =>
               `flex-1 flex flex-col items-center justify-center py-2 text-xs font-medium transition-colors ${
-                isActive ? 'text-primary-600' : 'text-gray-500 hover:text-primary-500'
+                isActive
+                  ? 'text-purple-600 dark:text-purple-400'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-purple-500'
               }`
             }
           >
@@ -135,6 +158,20 @@ function LockIcon({ className }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    </svg>
+  );
+}
+function MoonIcon({ className }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+  );
+}
+function SunIcon({ className }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>
   );
 }
